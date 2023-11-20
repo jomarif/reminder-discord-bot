@@ -4,25 +4,36 @@
 # Wait for the specified time
 # Remind of what was requested
 
-import schedule
+import threading
 import time
 
-def job():
-    print('Hello World')
+class Timer:
+
+    def __init__(self):
+        self.counter = 0
+        self.startClock = True
+    
+    def clock(self):
+        while self.startClock:
+            self.secondsCounter = 1
+            while self.secondsCounter % 50 is not 0:
+                time.sleep(0.1)
+                self.secondsCounter += 1
+            self.counter += 1 
+            print(self.counter)
+
+def getUserInput():
+    userInput = int(input('Enter -1 to Quit\n'))
+    if userInput == -1:
+        timer.startClock = False
+
+
 
 if __name__ == "__main__":
 
-    timeStart = time.time()
+    timer = Timer()
+    t1 = threading.Thread(target = timer.clock)
+    t1.start()
 
-    while True:
-
-        # Prints out something every 3 seconds
-        if round((time.time() - timeStart)) % 3 == 0:
-            while round(time.time() - timeStart) % 3 == 0: # we need this to ensure that it only prints once
-                pass
-            print('3 Seconds have passed')
-            print(f"Total time has been {round((time.time() - timeStart))}")
-
-        # this would be the timer
-
-        # input from user
+    t2 = threading.Thread(target = getUserInput)
+    t2.start()
